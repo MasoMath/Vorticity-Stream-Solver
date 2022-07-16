@@ -7,7 +7,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
-# https://pythonmatplotlibtips.blogspot.com/2018/11/animation-3d-surface-plot-funcanimation-matplotlib.html
 # function for creating visuals
 def createAnimated3DPlot(xDom, yDom, zValues, endpt, n,
                             ani_file_name='vort_stream_solution',
@@ -16,6 +15,7 @@ def createAnimated3DPlot(xDom, yDom, zValues, endpt, n,
     fig = plt.figure()
     ax = fig.add_subplot(projection='3d')
 
+    # Setting bounds, view angle, and removing labels
     ax.axes.set_xlim3d(-endpt, endpt)
     ax.axes.set_ylim3d(-endpt, endpt)
     ax.axes.set_zlim3d(-3, 3)
@@ -23,11 +23,12 @@ def createAnimated3DPlot(xDom, yDom, zValues, endpt, n,
     plt.xticks(color='w')
     plt.yticks(color='w')
 
-    # creates initial state and gives plot a name
+    # creates initial state and allocates plot into memory
     plot = [ax.plot_surface(xDom, yDom, np.reshape(zValues[0], (n,n)),
                             color='0.75', rstride=1, cstride=1
                             )]
 
+    # Creates animation
     ani = FuncAnimation(fig, _updateAnimation, frameNum, 
                         fargs=(xDom, yDom, zValues, n, plot, ax, cmap),
                         interval=1000/fps)

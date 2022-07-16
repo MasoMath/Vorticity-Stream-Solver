@@ -4,7 +4,9 @@ Gianluca Gisolo
 This script constructs a movie using an 4,5 solver.
 The resolution is determined by 2^N to make use of the speed
 from FFT construction of the differential equation being used. 
-Saves file as mp4 using ffmpeg encoder
+Saves file as mp4 using ffmpeg encoder.
+
+Notation used in comments is outlined in README.md file.
 '''
 import vortStreamInteractor
 import vortStreamAnimator
@@ -12,20 +14,20 @@ import vortStreamSolver
 import random
 import numpy as np
 
-DEFAULT = { 
-    'N_FACTOR' : 4,
-    'ENDPT' : 10,
-    'TIME_LENGTH' : 100,
-    'FPS' : 20,
-    'ANI_FILE_NAME' : 'surface_plot_ani',
-    'CMAP' : 'viridis'
-}
-
-# random.seed(23)
 
 def randomize_initial_conditions(custom_initial, random_initial, endpt):
+    '''
+    Checks bool parameters custom_initial and random_initial to see if the user
+    wants to create custom initial conditions or randomly generate them.
+    This method uses the float endpt param to ensure the initial conditions
+    lie within the boundary.
+    
+    Returns a list of lists, [e_1 e_2 e_3 ...] where each for each j, the
+    list e_j is an initial condition for a starting vorticity. Each e_j is
+    of the form [xShift yShift xStretch yStretch].
+    '''
     if random_initial or custom_initial:
-        print('\nHow many vorticiities will we have? (Must be an int)')
+        print('\nHow many vorticities will we have? (Must be an int)')
         try:
             user_input = int(input())
         except ValueError:
@@ -74,6 +76,10 @@ def randomize_initial_conditions(custom_initial, random_initial, endpt):
     return []
 
 def main():
+    """
+    Main method. Responsible for calling and transfering information from other
+    python files.
+    """
     n_factor, endpt, time_length, fps, ani_file_name, cmap, custom_initial = vortStreamInteractor.script_intro()
 
     print('\nWould you like to randomize your initial conditions? (y/n)')
@@ -85,11 +91,13 @@ def main():
     n = 2**n_factor
     tspan = np.linspace(0,time_length - 1,time_length, dtype=int)
 
+    # This solves the given system
     [omega, xDom, yDom] = vortStreamSolver.FFTsolver(
         n, tspan, initial_conditions, endpt=endpt,
         custom_initial=custom_initial, random_initial=random_initial
     )
 
+    # This animates and saves the given system
     vortStreamAnimator.createAnimated3DPlot(
         xDom, yDom, omega, endpt=endpt, n=n, frameNum=time_length, cmap=cmap, 
         ani_file_name=ani_file_name, fps=fps

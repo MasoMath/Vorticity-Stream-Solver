@@ -1,15 +1,11 @@
 '''
 Gianluca Gisolo
 
-Creates all the parameters for the solver
+Interacts with the user and initalizations all the parameters for the solver.
+Assumes the user is not trying to really break the solver by putting any
+information that could cause the program to fail. What is determined as
+'really break' is completely arbitrary.
 '''
-import numpy as np
-import matplotlib as mpl
-import matplotlib.pyplot as plt
-# from matplotlib import cm
-
-GRADIENT = np.linspace(0, 1, 256)
-GRADIENT = np.vstack((GRADIENT, GRADIENT))
 
 ALL_CMAPS = [
     'viridis', 'plasma', 'inferno', 'magma', 'cividis',
@@ -40,9 +36,22 @@ DEFAULT = {
     'CMAP' : 'viridis'
 }
 
-# Intro script and also determines all params
 def script_intro():
-    print('Welcome to my Vorticity-Stream function visulizer \n'
+    """
+    Method which introduces the program and returns all parameters needed
+    for the solver.
+
+    Returns an int n_factor which will determine the resolution of the domain
+    i.e. the domain will be a (2^n)^2 (x,y) square.
+    Returns a float endpt which will determine the boundary of our domain.
+    Returns an int time_length that is how many frames the animation will have.
+    Returns an int fps which is how many frames will be played per second.
+    Returns a string ani_file_name which is the name of the file.
+    Returns a string cmap which is which color map the animation will use.
+    Returns a bool custom_initial which determines if the user is using custom
+    parameters.
+    """
+    print('\nWelcome to Gianluca\'s Vorticity-Stream function visulizer \n'
             + 'Would you like to customize anything? (y/n)')
     user_input = input()
     custom_initial = user_input[0].lower() == 'y'
@@ -61,7 +70,6 @@ def script_intro():
     fps = define_param_fps(custom_initial, time_length)
     ani_file_name = define_param_ani_file_name(custom_initial)
     cmap = define_param_cmap(custom_initial)
-    plt.close()
     return n_factor, endpt, time_length, fps, ani_file_name, cmap, custom_initial
 
 # Define the factor of n that 2 will be raise to
@@ -156,6 +164,7 @@ def define_param_cmap(custom_initial):
     else:
         return DEFAULT['CMAP']
 
+# Prints out all color maps that are defined
 def print_cmaps():
     print('\nThe following are all available cmaps:\n\n')
     iii = 1
@@ -164,26 +173,3 @@ def print_cmaps():
         if iii % 8 == 0:
             print()
         iii += 1
-
-
-def plot_color_gradients(category, cmap_list):
-    '''
-    This script is taken from matplotlib colormaps page.
-    Copyright to the matplotlib development team.
-    '''
-    # Create figure and adjust figure height to number of colormaps
-    nrows = len(cmap_list)
-    figh = 0.35 + 0.15 + (nrows + (nrows - 1) * 0.1) * 0.22
-    fig, axs = plt.subplots(nrows=nrows + 1, figsize=(6.4, figh))
-    fig.subplots_adjust(top=1 - 0.35 / figh, bottom=0.15 / figh,
-                        left=0.2, right=0.99)
-    axs[0].set_title(f'{category} colormaps', fontsize=14)
-
-    for ax, name in zip(axs, cmap_list):
-        ax.imshow(GRADIENT, aspect='auto', cmap=plt.get_cmap(name))
-        ax.text(-0.01, 0.5, name, va='center', ha='right', fontsize=10,
-                transform=ax.transAxes)
-
-    # Turn off *all* ticks & spines, not just the ones with colormaps.
-    for ax in axs:
-        ax.set_axis_off()

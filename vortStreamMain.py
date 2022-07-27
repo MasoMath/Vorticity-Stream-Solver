@@ -47,10 +47,10 @@ def randomize_initial_conditions(custom_initial, random_initial, endpt):
                     'The first two must be between endpts, the last two must be nonzero '
                     + 'and if either \nof the last two have a negative sign, that will flip'
                     + ' the orientation of the vorticity'
-                    + '\ni.e. -4 2 2 3.14 \n WARNING: If any conditions are not good'
+                    + '\ni.e. -4 2 2 3.14 \n\nWARNING: If any conditions are not good'
                     + ' it will be replaced with a random condition!')
             for i in range(user_input):
-                print('\n\n Vorticity number ' + str(i))
+                print('\nVorticity number ' + str(i))
                 init_con = input().split()
                 try:
                     init_con = [float(con) for con in init_con]
@@ -70,7 +70,7 @@ def randomize_initial_conditions(custom_initial, random_initial, endpt):
                         ((-1)**random.randrange(2)) * random.uniform(0.01, endpt),
                         ((-1)**random.randrange(2)) * random.uniform(0.01, endpt)
                     ]
-                    print('\n\nThis is what is being added \n' + str(init_con))
+                    print('\nThis is what is being added \n' + str(init_con))
                 initials.append(init_con)                
             return initials
     return []
@@ -96,6 +96,13 @@ def main():
         n, tspan, initial_conditions, endpt=endpt,
         custom_initial=custom_initial, random_initial=random_initial
     )
+
+    # if this is true then that means the ode had to terminate early
+    # ? perhaps this is the error and a higher precision decomp would solve this ?
+    if omega.shape[0] < time_length:
+        time_length = omega.shape[0]
+        print('\nThe solver had to terminate early. Only ' + str(time_length)
+            + ' frames generated')
 
     # This animates and saves the given system
     vortStreamAnimator.createAnimated3DPlot(

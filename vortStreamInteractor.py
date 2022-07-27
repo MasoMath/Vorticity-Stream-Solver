@@ -51,7 +51,7 @@ def script_intro():
     Returns a bool custom_initial which determines if the user is using custom
     parameters.
     """
-    print('\nWelcome to Gianluca\'s Vorticity-Stream function visulizer \n'
+    print('\nWelcome to a Vorticity-Stream function visulizer \n'
             + 'Would you like to customize anything? (y/n)')
     user_input = input()
     custom_initial = user_input[0].lower() == 'y'

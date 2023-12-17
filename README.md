@@ -6,6 +6,8 @@ Created by Gianluca Gisolo. This program creates a numerical solution and a vide
 
 The solver makes use of a Runga-Kutta 4,5 scheme to determine a solution. Currently the solver preforms entirely on the CPU with no GPU assistance in calculations or in the visulizations.
 
+To see visual demos check the `\animations\` folder and play any of the `.mp4` files.
+
 ## Setup
 
 To the run the pogram, the following python packages must be installed:

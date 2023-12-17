@@ -18,6 +18,19 @@ Here you can see 4 vorticities whose placement on the grid, orientation, and rad
 
 ![](./animations/demo/random-demo.gif)
 
+## The PDE
+
+With Periodic Neumann Boundary conditions, let $\omega (x,y,t)$ be our vorticity function, that is, the solution we wish to numerically approximate and let $\psi(x,y,t)$ come from said Neumann conditions. That is, $\Delta_{(x,y)} \psi = \omega$. Let $\nu$ denote the viscosity of the medium. Then system we are then trying to solve is the vorticity transport equation:
+
+$ \omega_t + \nabla \psi \cdot (\omega_y, -\omega_x) = \nu \Delta \omega $
+
+The initial state of the system, $\omega_0(x,y)$, is assumed to be the finite linear combination of terms of the form
+
+$\exp\left( \frac{(x - x_0)^2}{\alpha} - \frac{(y - y_0)^2}{\beta} \right)$
+
+where $(x_0,y_0)$ is the location of the initial placement of the vorticity, $\alpha$ is how far the vorticities stretches in the $x$ direction, and $\beta$ is how far the vorticities stretches in the $y$ direction.
+
+
 ## Setup
 
 To the run the pogram, the following python packages must be installed:

@@ -26,7 +26,7 @@ $$ \omega_t + \nabla \psi \cdot (\omega_y, -\omega_x) = \nu \Delta \omega $$
 
 The initial state of the system, $\omega_0(x,y)$, is assumed to be the finite linear combination of terms of the form
 
-$$\exp\left( \frac{(x - x_0)^2}{\alpha} - \frac{(y - y_0)^2}{\beta} \right)$$
+$$\exp\left( - \frac{(x - x_0)^2}{\alpha} - \frac{(y - y_0)^2}{\beta} \right)$$
 
 where $(x_0,y_0)$ is the location of the initial placement of the vorticity, $\alpha$ is how far the vorticities stretches in the $x$ direction, and $\beta$ is how far the vorticities stretches in the $y$ direction.
 

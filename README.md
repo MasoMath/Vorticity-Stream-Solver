@@ -20,7 +20,7 @@ Here you can see 4 vorticities whose placement on the grid, orientation, and rad
 
 ## The PDE
 
-With Periodic Neumann Boundary conditions, let $\omega (x,y,t)$ be our vorticity function, that is, the solution we wish to numerically approximate and let $\psi(x,y,t)$ come from said Neumann conditions. That is, $\Delta_{(x,y)} \psi = \omega$. Let $\nu$ denote the viscosity of the medium. Then system we are then trying to solve is the vorticity transport equation:
+With Periodic Neumann Boundary conditions, let $\omega (x,y,t)$ be our vorticity function, that is, the solution we wish to numerically approximate and let $\psi(x,y,t)$ come from said Neumann conditions so that $\Delta_{(x,y)} \psi = \omega$. Let $\nu$ denote the viscosity of the medium. Then system we are then trying to solve is the vorticity transport equation:
 
 $$ \omega_t + \nabla \psi \cdot (\omega_y, -\omega_x) = \nu \Delta \omega $$
 
